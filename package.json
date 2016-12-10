@@ -1,0 +1,22 @@
+{
+  "name": "proton",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ghivert/rb-electron.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ghivert/rb-electron/issues"
+  },
+  "homepage": "https://github.com/ghivert/rb-electron#readme",
+  "devDependencies": {
+    "electron": "^1.4.12"
+  }
+}
