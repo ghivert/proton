@@ -1,12 +1,10 @@
 require 'ostruct'
 
-@values = Shared.values
-
 class Shared
   def self.values
     OpenStruct.new(
-      user:      null,
-      client:    null,
+      user:      nil,
+      client:    nil,
       board:     [],
       round:     0,
       enigma:    Enigma.new,
@@ -34,3 +32,5 @@ class Enigma
     @color  = OpenStruct.new
   end
 end
+
+$values = Shared.values

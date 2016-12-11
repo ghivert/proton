@@ -6,9 +6,9 @@ class Client
   class << self
     def connect
       begin
-        @values.client = Proton::Net.connect({ port: 2016 }) do
+        $values.client = Proton::Net.request({ port: 2016 }) do
           begin
-            @values.client.write("CONNEXION/#{@values.user}/\n")
+            $values.client.write("CONNEXION/#{$values.user}/\n")
           rescue Exception => err
             raise err
           end
@@ -18,7 +18,7 @@ class Client
       end
 
       begin
-        @values.client.on('data', process_data)
+        $values.client.on('data', process_data)
       rescue Exception => err
         puts  err
         raise err
@@ -26,8 +26,8 @@ class Client
     end
 
     def unconnect
-      @values.client.write("SORT/#{@values.user}/\n")
-      @values.client.end
+      $values.client.write("SORT/#{$values.user}/\n")
+      $values.client.end
     end
   end
 end

@@ -1,7 +1,7 @@
 require 'proton'
 require 'proton/ipc_main'
 require 'proton/browser_window'
-#require_relative 'client'
+require_relative 'client'
 
 @app = Proton.app
 
@@ -36,17 +36,18 @@ end
   begin
     Proton::IpcMain.on 'name' do
       @win.close
-      # Client.connect
+      puts "Blop"
+      Client.connect
     end
-  rescue Error => e
+  rescue StandardError => e
     puts e
     @app.quit
   end
 
   Process.on 'SIGINT' do
     begin
-      # Client.unconnect
-    rescue Error => e
+      Client.unconnect
+    rescue StandardError => e
       puts e
     end
 
@@ -57,16 +58,16 @@ end
 @app.on 'window-all-closed' do
   if (Process.platform != 'darwin')
     begin
-      # Client.unconnect
-    rescue Error => e
+      Client.unconnect
+    rescue StandardError => e
       puts e
     end
   end
 
   if ($quit_debug)
     begin
-      # Client.unconnect
-    rescue Error => e
+      Client.unconnect
+    rescue StandardError => e
       puts e
     end
 

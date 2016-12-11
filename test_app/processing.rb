@@ -1,8 +1,9 @@
+require 'proton'
 require_relative 'shared'
 
 def unconnect
-  @values.client.write("SORT/#{@values.user}/\n")
-  @values.client.end
+  $values.client.write("SORT/#{$values.user}/\n")
+  $values.client.end
 end
 
 def process_data(data)
@@ -15,7 +16,7 @@ def process_data(data)
     case input.shift
       # Log in messages.
     when 'BIENVENUE'
-      if input.shift != @values.user
+      if input.shift != $values.user
         puts 'Wrong user. What happend ?'
         begin
           unconnect
@@ -24,15 +25,15 @@ def process_data(data)
         end
         raise 'Wrong User'
       end
-      @chan.send('add-opponent', @values.user)
+      @chan.send('add-opponent', $values.user)
     when 'CONNECTE'
       name = input.shift
       @chan.send('add-opponent', name)
-      @values.opponents[name] = 0
+      $values.opponents[name] = 0
     when 'DECONNEXION'
       name = input.shift
       @chan.send('delete-opponent', name)
-      @values.opponents[name] = nil
+      $values.opponents[name] = nil
     when 'SESSION'
       # stream = input.shift
       input.shift
@@ -43,17 +44,17 @@ def process_data(data)
       convert_enigma(input.shift)
       read_winner(input.shift)
       initBoard
-      @values.state = "REFLEXION"
+      $values.state = "REFLEXION"
     when 'TUASTROUVE'
-      @values.state = "ENCHERES"
+      $values.state = "ENCHERES"
     when 'ILATROUVE'
-      @values.state = "ENCHERES"
+      $values.state = "ENCHERES"
       user = input.shift
       moves = input.shift
       values.solution << [user, moves]
       @chan.send('il-a-trouve', [user, moves])
     when 'FINREFLEXION'
-      @values.state = "ENCHERES"
+      $values.state = "ENCHERES"
       @chan.send('fin-reflexion')
     when 'VALIDATION'
       puts input
@@ -64,14 +65,14 @@ def process_data(data)
       user = input.shift
       moves = input.shift
       @chan.send('nouvelle-enchere', [user, moves])
-      @values.solution << [user, moves]
+      $values.solution << [user, moves]
     when 'FINENCHERE'
       user = input.shift
       @chan.send('fin-enchere', [user, input.shift])
-      if user == @values.user
-        @values.state = "SOLUTION"
+      if user == $values.user
+        $values.state = "SOLUTION"
       else
-        @values.state = "WAIT"
+        $values.state = "WAIT"
       end
     when 'SASOLUTION'
       input.shift
@@ -81,21 +82,21 @@ def process_data(data)
     when 'MAUVAISE'
       user = input.shift
       @chan.send('mauvaise', user)
-      if user == @values.user
-        @values.state = "SOLUTION"
+      if user == $values.user
+        $values.state = "SOLUTION"
       else
-        @values.state = "WAIT"
+        $values.state = "WAIT"
       end
     when 'FINRESO'
-      @values.state = "WAIT"
-      @values.solution = []
+      $values.state = "WAIT"
+      $values.solution = []
     when 'TROPLONG'
       user = input.shift
       @chan.send('trop-long', user)
-      if user == @values.user
-        @values.state = "SOLUTION"
+      if user == $values.user
+        $values.state = "SOLUTION"
       else
-        @values.state = "WAIT"
+        $values.state = "WAIT"
       end
     when 'CHAT'
       @chan.send('chat', [input.shift, input.shift])
@@ -120,7 +121,7 @@ def readBoard
     @x = walls.shift
     @y = walls.shift
     @orient = walls.shift
-    @values.board << [@x, @y, @orient]
+    $values.board << [@x, @y, @orient]
     paintWall
   end
 end
@@ -153,7 +154,7 @@ end
 
 # Read a end state and updates scores.
 def read_winner(stream)
-  score = @stream.split(/\(|\)|\,/).select { |val| val != ''}
+  score = stream.split(/\(|\)|\,/).select { |val| val != ''}
   if score.length == 0
     puts 'No score... Why ?'
     begin
@@ -165,32 +166,32 @@ def read_winner(stream)
   end
 
   # Update the score of opponents.
-  @values.round = score.shift
+  $values.round = score.shift
   while score.length != 0
-    @values.opponents[score.shift] = score.shift
+    $values.opponents[score.shift] = score.shift
     @chan.send('update-score')
   end
 end
 
 # Convert the enigma.
 def convert_enigma(stream)
-  enigma = @stream.split(/\(|\)|\,/).select { |val| val != ''}
+  enigma = stream.split(/\(|\)|\,/).select { |val| val != ''}
 
-  @values.enigma.red.x,    @values.enigma.red.y    = enigma[0], enigma[1]
-  @values.enigma.blue.x,   @values.enigma.blue.y   = enigma[2], enigma[3]
-  @values.enigma.yellow.x, @values.enigma.yellow.y = enigma[4], enigma[5]
-  @values.enigma.green.x,  @values.enigma.green.y  = enigma[6], enigma[7]
-  @values.enigma.target.x, @values.enigma.target.y = enigma[8], enigma[9]
-  @values.enigma.color                             = enigma[10]
+  $values.enigma.red.x,    $values.enigma.red.y    = enigma[0], enigma[1]
+  $values.enigma.blue.x,   $values.enigma.blue.y   = enigma[2], enigma[3]
+  $values.enigma.yellow.x, $values.enigma.yellow.y = enigma[4], enigma[5]
+  $values.enigma.green.x,  $values.enigma.green.y  = enigma[6], enigma[7]
+  $values.enigma.target.x, $values.enigma.target.y = enigma[8], enigma[9]
+  $values.enigma.color                             = enigma[10]
 end
 
 def init_board
   @chan.send('update-graphics', [
-    @values.enigma.red.x,    @values.enigma.red.y,
-    @values.enigma.blue.x,   @values.enigma.blue.y,
-    @values.enigma.yellow.x, @values.enigma.yellow.y,
-    @values.enigma.green.x,  @values.enigma.green.y,
-    @values.enigma.target.x, @values.enigma.target.y,
-    @values.enigma.color
+    $values.enigma.red.x,    $values.enigma.red.y,
+    $values.enigma.blue.x,   $values.enigma.blue.y,
+    $values.enigma.yellow.x, $values.enigma.yellow.y,
+    $values.enigma.green.x,  $values.enigma.green.y,
+    $values.enigma.target.x, $values.enigma.target.y,
+    $values.enigma.color
   ])
 end

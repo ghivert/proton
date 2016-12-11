@@ -1,4 +1,5 @@
 require 'native'
+require_relative 'web_contents'
 
 module Proton
   class BrowserWindow
@@ -12,6 +13,10 @@ module Proton
 
     def on(event, &callback)
       `#{@window}.on(#{event}, #{callback})`
+    end
+
+    def web_contents
+      WebContents.new(`#{@window}.webContents`)
     end
   end
 end
