@@ -18,12 +18,16 @@ ruby build.rb
 ./node_modules/bin/electron .
 ```
 
+## Remarks ?
+PR are welcome. :)
+"Hey guy, you're not writing tests!" I know. Proton is mainly a POC as for now, and shouldn't be used into production. If the project goes on, Spectron will probably be used.
+
 ## Licence
 
 MIT Licence. Enjoy the work.
 
 ## Why ?
 
-Because it's both fun and useful. Electron rocks. Ruby rocks. 
+Because it's both fun and useful. Electron rocks. Ruby rocks.
 
 Ruby + Electron = <3
