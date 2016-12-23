@@ -1,6 +1,7 @@
 require 'proton'
 require 'proton/ipc_main'
 require 'proton/browser_window'
+require 'proton/web_contents'
 require_relative 'client'
 
 @app = Proton.app
@@ -34,43 +35,43 @@ end
 @app.on 'ready' do
   create_window
   begin
-    Proton::IpcMain.on 'name' do
-      @win.close
-      puts "Blop"
-      Client.connect
-    end
+    # Proton::IpcMain.on 'name' do
+    #   @win.close
+    #   puts "Blop"
+    #   Client.connect
+    # end
   rescue StandardError => e
     puts e
     @app.quit
   end
 
-  Process.on 'SIGINT' do
-    begin
-      Client.unconnect
-    rescue StandardError => e
-      puts e
-    end
-
-    @app.quit
-  end
+  # Process.on 'SIGINT' do
+  #   begin
+  #     Client.unconnect
+  #   rescue StandardError => e
+  #     puts e
+  #   end
+  #
+  #   @app.quit
+  # end
 end
 
-@app.on 'window-all-closed' do
-  if (Process.platform != 'darwin')
-    begin
-      Client.unconnect
-    rescue StandardError => e
-      puts e
-    end
-  end
-
-  if ($quit_debug)
-    begin
-      Client.unconnect
-    rescue StandardError => e
-      puts e
-    end
-
-    @app.quit
-  end
-end
+# @app.on 'window-all-closed' do
+#   if (Process.platform != 'darwin')
+#     begin
+#       Client.unconnect
+#     rescue StandardError => e
+#       puts e
+#     end
+#   end
+#
+#   if ($quit_debug)
+#     begin
+#       Client.unconnect
+#     rescue StandardError => e
+#       puts e
+#     end
+#
+#     @app.quit
+#   end
+# end
