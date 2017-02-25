@@ -1,6 +1,7 @@
 require 'proton'
 require 'proton/ipc_main'
 require 'proton/browser_window'
+require 'proton/web_contents'
 require_relative 'client'
 
 @app = Proton.app
@@ -43,15 +44,15 @@ end
     @app.quit
   end
 
-  Process.on 'SIGINT' do
-    begin
-      Client.unconnect
-    rescue StandardError => e
-      puts e
-    end
-
-    @app.quit
-  end
+  # Process.on 'SIGINT' do
+  #   begin
+  #     Client.unconnect
+  #   rescue StandardError => e
+  #     puts e
+  #   end
+  #
+  #   @app.quit
+  # end
 end
 
 # @app.on 'window-all-closed' do
