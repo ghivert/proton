@@ -8,26 +8,10 @@
 <body>
   <h1>Please, enter your username !</h1>
   <div style="padding: 100px; font-size: 30px;">
-    <input type="text" name="name" id="nameConnect" placeholder="Name..." onkeydown="enterName(event)">
-    <input id="nameEnter" type="button" onclick="updateName()" name="enter" value="Enter">
+    <input type="text" name="name" id="nameConnect" placeholder="Name..." onkeydown="Opal.Foo.$enter_name(event)">
+    <input id="nameEnter" type="button" onclick="Opal.Foo.$update_name()" name="enter" value="Enter">
   </div>
 
-<script type="text/javascript">
-'use strict'
-/* jshint browser: true */
-const ipc = require('electron').ipcRenderer
-const remote = require('electron').remote
-const values = remote.require('./lib/client/shared.js').values
-function updateName() {
-  let name = document.getElementById('nameConnect')
-  values.user = name.value
-  ipc.send('name')
-}
-function enterName(event) {
-  if (event.keyCode === 13) {
-    updateName()
-  }
-}
-</script>
+<script type="text/javascript" src="front.js"></script>
 </body>
 </html>

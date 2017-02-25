@@ -3,12 +3,7 @@ module Proton
     @ipc = `electron.ipcMain`
     class << self
       def on(channel, &callback)
-        puts callback
         `#{@ipc}.on(#{channel}, #{callback})`
-        puts @ipc
-        `#{@ipc}.on('name', function () {
-          console.log('Yes !');
-        })`
       end
 
       def once(channel, &callback)

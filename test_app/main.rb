@@ -15,7 +15,6 @@ def create_window
   Global.main_window = Proton::BrowserWindow.new({
     width:  900,
     height: 800,
-    titleBarStyle: 'hidden'
   }).tap do |bw|
     bw.load_url "file://#{`__dirname`}/index.html"
     bw.on 'closed' do
@@ -28,6 +27,7 @@ def create_window
     height: 800
   }).tap do |bw|
     bw.load_url "file://#{`__dirname`}/login.html"
+    # bw.toggle_dev_tools
   end
 end
 
@@ -36,7 +36,6 @@ end
   begin
     Proton::IpcMain.on 'name' do
       @win.close
-      puts "Blop"
       Client.connect
     end
   rescue StandardError => e
@@ -55,22 +54,22 @@ end
   end
 end
 
-@app.on 'window-all-closed' do
-  if (Process.platform != 'darwin')
-    begin
-      Client.unconnect
-    rescue StandardError => e
-      puts e
-    end
-  end
-
-  if ($quit_debug)
-    begin
-      Client.unconnect
-    rescue StandardError => e
-      puts e
-    end
-
-    @app.quit
-  end
-end
+# @app.on 'window-all-closed' do
+#   if (Process.platform != 'darwin')
+#     begin
+#       Client.unconnect
+#     rescue StandardError => e
+#       puts e
+#     end
+#   end
+#
+#   if ($quit_debug)
+#     begin
+#       Client.unconnect
+#     rescue StandardError => e
+#       puts e
+#     end
+#
+#     @app.quit
+#   end
+# end

@@ -1,13 +1,15 @@
-require 'native'
 
 module Proton
   class ClientRequest
     def initialize(options)
-      @client_request = `new ClientRequest(#{options.to_n})`
+      @client_request = `net.request(#{options.to_n})`
+      `console.log(#{@client_request})`
     end
 
     def on(event, &callback)
       `#{@client_request}.on(#{event}, #{callback})`
+      `console.log(#{@client_request})`
+      
     end
 
     # Instance Properties.
@@ -36,17 +38,27 @@ module Proton
 
     def write(chunk, encoding = 'utf-8', &callback)
       if callback.nil?
+        puts "je suis la #{chunk}, #{@client_request}"
         `#{@client_request}.write(#{chunk}, #{encoding})`
       else
+        puts "je suis else #{chunk}"
         `#{@client_request}.write(#{chunk}, #{encoding}, #{callback})`
       end
     end
 
     def finish(chunk = nil, encoding = 'utf-8', &callback)
-      if callback.nil?
-        `#{@client_request}.end(#{chunk}, #{encoding})`
+      if chunk.nil?
+        if callback.nil?
+          `#{@client_request}.end()`
+        else
+          `#{@client_request}.end(#{callback})`
+        end
       else
-        `#{@client_request}.end(#{chunk}, #{encoding}, #{callback})`
+        if callback.nil?
+          `#{@client_request}.end(#{chunk}, #{encoding})`
+        else
+          `#{@client_request}.end(#{chunk}, #{encoding}, #{callback})`
+        end
       end
     end
 
