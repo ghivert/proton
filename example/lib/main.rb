@@ -18,7 +18,7 @@ def create_window
     height: 800,
   }).tap do |bw|
     puts `__dirname`
-    bw.load_url "file://#{`__dirname`}/index.html"
+    bw.load_url "file://#{`__dirname`}/front/index.html"
     bw.on 'closed' do
       Global.main_window = nil
     end
@@ -28,7 +28,7 @@ def create_window
     width:  900,
     height: 800
   }).tap do |bw|
-    bw.load_url "file://#{`__dirname`}/login.html"
+    bw.load_url "file://#{`__dirname`}/front/login.html"
     # bw.toggle_dev_tools
   end
 end
