@@ -1,14 +1,12 @@
-require_relative 'client_request'
+require 'proton/client_request'
 
 module Proton
   class Net
     class << self
+      # Class Methods
+      
       def request(options)
-        client = Proton::ClientRequest.new(options)
-        if block_given?
-          yield client
-        end
-        client
+        Proton::ClientRequest.new(options)
       end
     end
   end

@@ -3,7 +3,9 @@ require 'native'
 module Proton
   class BrowserWindow
     class WebContents
-      # Class functions
+      attr_reader :content
+      # Class Methods
+
       class << self
         def get_all_web_contents
           arr, wcs = [], `webContents.getAllWebContents()`
@@ -32,38 +34,40 @@ module Proton
         end
       end
 
-      # Instance functions.
+      # Instance Properties
+
+      def id
+        `#{content}.id`
+      end
+
+      def session
+        `#{content}.session`
+      end
+
+      def host_web_contents
+        `#{content}.hostWebContents`
+      end
+
+      def dev_tools_web_contents
+        `#{content}.devToolsWebContents`
+      end
+
+      def debugger
+        `#{content}.debugger`
+      end
+
+      # Instance Methods
+
       def initialize(content)
         @content = content
       end
 
       def send(chan, *rest)
         if rest.size == 0
-          `#{@content}.send(#{chan})`
+          `#{content}.send(#{chan})`
         else
-          rest.each { |var| `#{@content}.send(#{chan}, #{var})` }
+          rest.each { |var| `#{content}.send(#{chan}, #{var})` }
         end
-      end
-
-      # Refactor for better code.
-      def id
-        `#{@content}.id`
-      end
-
-      def session
-        `#{@content}.session`
-      end
-
-      def host_web_contents
-        `#{@content}.hostWebContents`
-      end
-
-      def dev_tools_web_contents
-        `#{@content}.devToolsWebContents`
-      end
-
-      def debugger
-        `#{@content}.debugger`
       end
     end
   end

@@ -1,5 +1,5 @@
 require 'native'
-require_relative 'web_contents'
+require 'proton/web_contents'
 
 module Proton
   class BrowserWindow
@@ -8,16 +8,22 @@ module Proton
       @web_contents = WebContents.new(`#{@window}.webContents`)
     end
 
-    def load_url(url)
-      `#{@window}.loadURL(#{url})`
+    # Instance Properties
+
+    def web_contents
+      @web_contents
     end
+
+    # Events
 
     def on(event, &callback)
       `#{@window}.on(#{event}, #{callback})`
     end
 
-    def web_contents
-      @web_contents
+    # Instance Methods
+
+    def load_url(url)
+      `#{@window}.loadURL(#{url})`
     end
 
     def close

@@ -2,6 +2,8 @@ module Proton
   class IpcMain
     @ipc = `electron.ipcMain`
     class << self
+      # Events
+
       def on(channel, &callback)
         `#{@ipc}.on(#{channel}, #{callback})`
       end

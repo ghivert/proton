@@ -1,11 +1,6 @@
 require 'proton'
 require_relative 'shared'
 
-def unconnect
-  $values.client.write("SORT/#{$values.user}/\n")
-  $values.client.end
-end
-
 def process_data(data)
   @chan = Global.main_window.web_contents
   # Get what the server tells.

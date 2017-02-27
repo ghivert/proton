@@ -17,6 +17,7 @@ def create_window
     width:  900,
     height: 800,
   }).tap do |bw|
+    puts `__dirname`
     bw.load_url "file://#{`__dirname`}/index.html"
     bw.on 'closed' do
       Global.main_window = nil
@@ -44,15 +45,15 @@ end
     @app.quit
   end
 
-  # Process.on 'SIGINT' do
-  #   begin
-  #     Client.unconnect
-  #   rescue StandardError => e
-  #     puts e
-  #   end
-  #
-  #   @app.quit
-  # end
+  Process.on 'SIGINT' do
+    begin
+      Client.unconnect
+    rescue StandardError => e
+      puts e
+    end
+
+    @app.quit
+  end
 end
 
 # @app.on 'window-all-closed' do

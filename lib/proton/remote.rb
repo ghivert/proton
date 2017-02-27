@@ -1,6 +1,8 @@
 module Proton
   class Remote
     @remote = `electron.remote`
+    # Class Methods
+    
     def self.access(global_value)
       access = []
         if global_value[0] == '$'
