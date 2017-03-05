@@ -21,7 +21,7 @@ class Enigma
   attr_reader :yellow
   attr_reader :green
   attr_reader :target
-  attr_reader :color
+  attr_accessor :color
 
   def initialize
     @red    = OpenStruct.new(x: 0, y: 0)
@@ -29,7 +29,7 @@ class Enigma
     @yellow = OpenStruct.new(x: 0, y: 0)
     @green  = OpenStruct.new(x: 0, y: 0)
     @target = OpenStruct.new(x: 0, y: 0)
-    @color  = OpenStruct.new
+    @color  = ''
   end
 end
 

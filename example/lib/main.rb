@@ -22,6 +22,7 @@ def create_window
     bw.on 'closed' do
       Global.main_window = nil
     end
+    # bw.toggle_dev_tools
   end
 
   @win = Proton::BrowserWindow.new({

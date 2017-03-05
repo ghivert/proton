@@ -3,11 +3,11 @@ require 'proton/ipc_renderer'
 require 'proton/remote'
 
 $values = Proton::Remote.access('$values')
-class Foo
+class Event
   def self.update_name
     name = `document.getElementById("nameConnect")`
     $values.user = name.JS[:value]
-    Proton::IpcRenderer.send('name')
+    Proton::IpcRenderer.send 'name'
   end
 
   def self.enter_name(event)

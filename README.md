@@ -12,7 +12,7 @@ At the moment, nothing is automated. It is needed to write some scripts to provi
 ## How to compile ?
 
 ```
-cd proton-io
+cd proton
 npm install
 ruby build.rb
 ./node_modules/bin/electron .

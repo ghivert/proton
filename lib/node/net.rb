@@ -12,9 +12,13 @@ module Node
     # Events
 
     def on_data
-      apply_to_chunk = -> (chunk) {
-        yield Node::Buffer.new(chunk)
-      }
+      apply_to_chunk = -> (chunk) do
+        if `typeof chunk` == 'string'
+          yield chunk
+        else
+          yield Node::Buffer.new(chunk)
+        end
+      end
       `#{connection}.on('data', #{apply_to_chunk})`
     end
 
@@ -26,6 +30,10 @@ module Node
       else
         `#{connection}.write(#{data}, #{encoding}, #{callback})`
       end
+    end
+
+    def finish
+      `#{connection}.end()`
     end
 
     # Class Methods

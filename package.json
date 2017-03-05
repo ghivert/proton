@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ghivert/rb-electron.git"
+    "url": "git+https://github.com/ghivert/proton.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ghivert/rb-electron/issues"
+    "url": "https://github.com/ghivert/proton/issues"
   },
-  "homepage": "https://github.com/ghivert/rb-electron#readme",
+  "homepage": "https://github.com/ghivert/proton#readme",
   "devDependencies": {
     "electron": "^1.4.12"
   }

@@ -7,7 +7,7 @@ class Client
     def connect
       begin
         $values.client = Node::Net.connect({ port: 2016 })
-        $values.client.write("CONNEXION/#{$values.user}/\\n")
+        $values.client.write("CONNEXION/#{$values.user}/\n")
         $values.client.on_data do |data|
           process_data data
         end
@@ -19,7 +19,7 @@ class Client
     end
 
     def unconnect
-      $values.client.write("SORT/#{$values.user}/\\n")
+      $values.client.write("SORT/#{$values.user}/\n")
       $values.client.finish
     end
   end

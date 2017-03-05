@@ -1,24 +1,25 @@
 module Node
   module WritableStream
     # Events
-    
+
     def on_close
-      `#{stream}.on('close', #{yield})`
+      close_ = -> () { yield }
+      `#{stream}.on('close', #{close_})`
     end
 
     def on_drain
-      `#{stream}.on('drain', #{yield})`
+      drain_ = -> () { yield }
+      `#{stream}.on('drain', #{drain_})`
     end
 
     def on_error
-      apply_to_error = -> (error) {
-        yield error
-      }
+      apply_to_error = -> (error) { yield error }
       `#{stream}.on('error', #{apply_to_error})`
     end
 
     def on_finish
-      `#{stream}.on('finish', #{yield})`
+      finish_ = -> () { yield }
+      `#{stream}.on('finish', #{finish_})`
     end
 
     # Instance Methods

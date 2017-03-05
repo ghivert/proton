@@ -7,6 +7,10 @@ module Proton
       def send(channel)
         `#{@ipc}.send(#{channel})`
       end
+
+      def on(event, &callback)
+        `#{@ipc}.on(#{event}, #{callback})`
+      end
     end
   end
 end

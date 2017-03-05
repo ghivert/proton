@@ -2,7 +2,7 @@ module Proton
   class Remote
     @remote = `electron.remote`
     # Class Methods
-    
+
     def self.access(global_value)
       access = []
         if global_value[0] == '$'
@@ -16,6 +16,10 @@ module Proton
       opal = `#{@remote}.require("./main.js").Opal`
       access.each { |name| opal = opal.JS[name]}
       opal
+    end
+
+    def self.ready!
+      `#{@remote}.getGlobal("ready").ready = true`
     end
   end
 end

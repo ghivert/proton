@@ -109,7 +109,7 @@ func game(h *hub, session chan []byte, start chan int) {
 
 	// waiting for 2 players to start
 	<- start
-	<- start
+	// <- start
 	fmt.Fprintln(os.Stderr, "Minimum number of clients reached -> starting the game.")
 
 	/* the game board.
@@ -150,7 +150,7 @@ main_loop:
 		for round_nb := 1; round_nb <= max_round; round_nb++ {
 
 			// If there is only 0 or 1 client, exiting.
-			if len(h.clients) < 2 {
+			if len(h.clients) < 1 {
 				fmt.Fprintln(os.Stderr, "/!\\ Not enough clients, exiting.")
 				break main_loop
 			}
@@ -512,6 +512,7 @@ func client(c net.Conn, h *hub) {
 
 	message, _ := bufio.NewReader(c).ReadString('\n')
 	s := strings.Split(string(message), "/")
+	fmt.Println(s)
 	if s[0] != "CONNEXION" || s[1] == "" {
 		fmt.Fprintln(os.Stderr, "   - bad request from new client.")
 		return
@@ -522,6 +523,7 @@ func client(c net.Conn, h *hub) {
 	}
 
 	message = "BIENVENUE/" + s[1] + "/\n"
+	fmt.Println("je suis ici")
 	c.Write([]byte(message))
 
 	message = "CONNECTE/" + s[1] + "/\n"

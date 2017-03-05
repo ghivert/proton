@@ -65,8 +65,10 @@ module Proton
       def send(chan, *rest)
         if rest.size == 0
           `#{content}.send(#{chan})`
+        elsif rest.size == 1
+          `#{content}.send(#{chan}, #{rest.shift})`
         else
-          rest.each { |var| `#{content}.send(#{chan}, #{var})` }
+          `#{content}.send(#{chan}, #{rest})`
         end
       end
     end
