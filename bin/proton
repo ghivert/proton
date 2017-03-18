@@ -1,0 +1,21 @@
+#!/usr/bin/env ruby
+require 'opal'
+
+# Use gem proton in Opal.
+Opal.use_gem 'proton'
+
+# Append current path to find input.
+Opal.append_path '.'
+
+requirements = [
+  'var electron = require(\'electron\');',
+  'var {BrowserWindow, webContents, net} = electron;',
+  'var nodeNet = require(\'net\');'
+].join "\n"
+
+raise ArgumentError.new 'No file provided' if ARGV[0].nil?
+
+input  = ARGV[0]
+output = input.gsub(/.rb/, '.js')
+
+IO.binwrite output, requirements + Opal::Builder.build(input).to_s
