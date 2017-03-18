@@ -1,11 +1,55 @@
 #!/usr/bin/env ruby
 require 'opal'
+require 'getoptlong'
 
-# Use gem proton in Opal.
+# Parsing class. Ease code reading.
+
+class CliArgs
+  @help = <<-HELP
+proton [OPTIONS] main.rb
+  -h, --help: Show help.
+  -s, --start: Launch electron right after compiling!
+  -o, --out: Specify file name of output.
+HELP
+
+  def self.parse
+    start = false
+    output = nil
+    opts = GetoptLong.new(
+    [ '--start', '-s', GetoptLong::NO_ARGUMENT ],
+    [ '--help', '-h', GetoptLong::NO_ARGUMENT ],
+    [ '--out', '-o', GetoptLong::REQUIRED_ARGUMENT ]
+    )
+
+    opts.each do |opt, arg|
+      case opt
+      when '--help'  then puts @help; exit 0
+      when '--start' then start = true
+      when '--out'   then output = arg
+      end
+    end
+
+    if ARGV.length != 1
+      puts "No file provided. (Call proton --help to see the full list of commands.)"
+      exit 0
+    end
+
+    input  = ARGV.shift
+    output = input.gsub(/.rb/, '.js') if output.nil?
+
+    {
+      input: input,
+      output: output,
+      start: start
+    }
+  end
+end
+
+
 Opal.use_gem 'proton'
-
-# Append current path to find input.
 Opal.append_path '.'
+
+options = CliArgs.parse
 
 requirements = [
   'var electron = require(\'electron\');',
@@ -13,9 +57,5 @@ requirements = [
   'var nodeNet = require(\'net\');'
 ].join "\n"
 
-raise ArgumentError.new 'No file provided' if ARGV[0].nil?
-
-input  = ARGV[0]
-output = input.gsub(/.rb/, '.js')
-
-IO.binwrite output, requirements + Opal::Builder.build(input).to_s
+IO.binwrite options[:output], requirements + Opal::Builder.build(options[:input]).to_s
+`electron #{options[:output]}` if options[:start]
