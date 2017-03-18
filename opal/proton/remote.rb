@@ -1,3 +1,5 @@
+require 'proton/web_contents'
+
 module Proton
   class Remote
     @remote = `electron.remote`
@@ -16,6 +18,10 @@ module Proton
       opal = `#{@remote}.require("./main.js").Opal`
       access.each { |name| opal = opal.JS[name]}
       opal
+    end
+
+    def self.get_current_web_contents
+      WebContents.new `#{@remote}.getCurrentWebContents`
     end
 
     def self.ready!
