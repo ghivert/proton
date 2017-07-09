@@ -3,11 +3,11 @@ require 'native'
 module Proton
   class ClientRequest
     def initialize(options)
-      @client_request = `new ClientRequest(#{options.to_n})`
+      @client_request = `net.request(#{options.to_n})`
     end
 
     def on(event, &callback)
-      `#{@client_request}.on(#{event}, #{callback})`
+      `#{@client_request}.on(#{event}, #{callback.to_n})`
     end
 
     # Instance Properties.
@@ -43,10 +43,14 @@ module Proton
     end
 
     def finish(chunk = nil, encoding = 'utf-8', &callback)
-      if callback.nil?
-        `#{@client_request}.end(#{chunk}, #{encoding})`
+      if chunk
+        `#{@client_request}.end()`
       else
-        `#{@client_request}.end(#{chunk}, #{encoding}, #{callback})`
+        if callback.nil?
+          `#{@client_request}.end(#{chunk}, #{encoding})`
+        else
+          `#{@client_request}.end(#{chunk}, #{encoding}, #{callback})`
+        end
       end
     end
 

@@ -17,10 +17,10 @@
 /* jshint browser: true */
 const ipc = require('electron').ipcRenderer
 const remote = require('electron').remote
-const values = remote.require('./lib/client/shared.js').values
+// const values = remote.require('./lib/client/shared.js').values
 function updateName() {
   let name = document.getElementById('nameConnect')
-  values.user = name.value
+  // values.user = name.value
   ipc.send('name')
 }
 function enterName(event) {

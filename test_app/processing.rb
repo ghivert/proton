@@ -7,9 +7,11 @@ def unconnect
 end
 
 def process_data(data)
+  puts "#{data}"
   @chan = Global.main_window.web_contents
+  puts "Je suis la."
   # Get what the server tells.
-  input = data.to_string.split(/\n|\//).select { |num| num != ''}
+  input = data.to_s.split(/\n|\//).select { |num| num != ''}
   puts input
 
   while input.length > 0
