@@ -1,4 +1,4 @@
-# Proton — Ruby Electron
+# Proton — Ruby Electron — Desktop app using Ruby and Node!
 
 Ruby Electron is an experimental work. As an open source project, it should provide a full port of [Electron](https://electron.atom.io), the perfect web desktop app framework. Some parts are currently working, but everything needs more work. As time is passing, more and more features will be added, and examples will be provided in the future. [They can be found here](https://github.com/ghivert/proton-sample-apps).
 
