@@ -14,7 +14,8 @@ module Proton
     # Events
 
     def on_aborted
-      `#{incoming_message}.on('aborted', #{yield})`
+      aborted_ = -> () { yield }
+      `#{incoming_message}.on('aborted', #{aborted_})`
     end
 
     # Instance Properties

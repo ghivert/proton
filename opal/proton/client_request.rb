@@ -14,21 +14,22 @@ module Proton
     # Events
 
     def on_response
-      apply_to_message = -> (incoming_message) {
+      apply_to_message = -> (incoming_message) do
         yield Proton::IncomingMessage.new(incoming_message)
-      }
+      end
       `#{client_request}.on('response', #{apply_to_message})`
     end
 
     def on_login
-      apply_to_auth_info = -> (auth_info, callback) {
+      apply_to_auth_info = -> (auth_info, callback) do
         yield Proton::AuthInfo.new(auth_info), callback
-      }
+      end
       `#{client_request}.on('login', #{apply_to_auth_info})`
     end
 
     def on_abort
-      `#{client_request}.on('login', #{yield})`
+      abort_ = -> () { yield }
+      `#{client_request}.on('login', #{abort_})`
     end
 
     # Instance Properties
