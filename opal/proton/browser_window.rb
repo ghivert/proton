@@ -40,8 +40,9 @@ module Proton
 
     # Events
 
-    def on(event, &callback)
-      `#{@window}.on(#{event}, #{callback})`
+    def on_closed
+      closed_ = -> (event) { yield event }
+      `#{@window}.on('closed', #{closed_})`
     end
 
     # Instance Methods
