@@ -41,3 +41,8 @@ MIT Licence. Enjoy the work.
 Because it's both fun and useful. Electron rocks. Ruby rocks.
 
 Ruby + Electron = <3
+
+## Support on Beerpay
+Hey dude! Help me out for a couple of :beers:!
+
+[![Beerpay](https://beerpay.io/ghivert/proton/badge.svg?style=beer-square)](https://beerpay.io/ghivert/proton)  [![Beerpay](https://beerpay.io/ghivert/proton/make-wish.svg?style=flat-square)](https://beerpay.io/ghivert/proton?focus=wish)
