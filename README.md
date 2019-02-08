@@ -1,12 +1,12 @@
 # Proton — Ruby Electron — Desktop app using Ruby and Node!
 
-Ruby Electron is an experimental work. As an open source project, it should provide a full port of [Electron](https://electron.atom.io), the perfect web desktop app framework. Some parts are currently working, but everything needs more work. As time is passing, more and more features will be added, and examples will be provided in the future. [They can be found here](https://github.com/ghivert/proton-sample-apps).
+Ruby Electron is an experimental work. As an open source project, it should provide a full port of [Electron](https://electronjs.org), the perfect web desktop app framework. Some parts are currently working, but everything needs more work. As time is passing, more and more features will be added, and examples will be provided in the future. [They can be found here](https://github.com/ghivert/proton-sample-apps).
 
 Right now, Proton can be bundled as a gem, but is not purposefully. It is still at a really early stage, and eveything can change or break previous code at any moment. When stable, Proton will be released on RubyGems.
 
 ## How does it work ?
 
-Ruby Electron makes its magic with help of Node.js and [Opal](http://opalrb.org). Opal is a transpiler from Ruby to JavaScript. It has few limitations like non mutable string. Otherwise it provides a full transpiler. More details can be found on the page of the project.
+Ruby Electron makes its magic with help of Node.js and [Opal](http://opalrb.com). Opal is a transpiler from Ruby to JavaScript. It has few limitations like non mutable string. Otherwise it provides a full transpiler. More details can be found on the page of the project.
 Providing Electron to Ruby users, Proton makes extensive use of Electron, by providing a Ruby-like library.
 
 ## How to compile ?
